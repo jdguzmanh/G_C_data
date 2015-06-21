@@ -1,3 +1,8 @@
+
+library(plyr)
+library(dplyr)
+
+
 #lee el archivo con el nombre de las variables.
 #reads the file named variables.
 MyHeader <- read.table('./G_C_data/UCI HAR Dataset/features.txt', sep=" ")
@@ -24,8 +29,6 @@ train <- read.fwf('./G_C_data/UCI HAR Dataset/train/X_train.txt', widths = Mywid
 test <- read.fwf('./G_C_data/UCI HAR Dataset/test/X_test.txt', widths = Mywidths,  col.names=MyHeader[,2][HeaderVal])
 
 
-library(plyr)
-
 ## Se carga el archivos de sujetos
 #Loading the files subject 
 Trainsubject <- read.table('./G_C_data/UCI HAR Dataset/train/subject_train.txt', sep=" ", col.names=c('subject'))
@@ -50,8 +53,6 @@ train2[,'activity'] <- TrainAct
 test2[,'subject'] <- Testsubject
 test2[,'activity'] <- TestAct
 
-library(tidyr)
-
 
 GlobalData <- 
 
@@ -68,6 +69,6 @@ GlobalData <-
 	##Calcula el promedio para cada grupo
 	## Calculate the average for each group
 	summarise( meandef=mean(val) )%>%
-  ##Muestra el resultado
-  ## Shows the result
-  print
+  ## exporta el resultado
+  ## export the result
+  write.table('GlobalData.txt',  sep=';', dec=',')
